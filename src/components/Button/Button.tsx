@@ -15,7 +15,7 @@ export interface ButtonProps {
    */
   size?: 'small' | 'medium' | 'large';
   /**
-   * Button contents
+   * MUIButton contents
    */
   label: string;
   /**
