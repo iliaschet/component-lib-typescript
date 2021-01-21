@@ -34,9 +34,10 @@
   "scripts": {
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build": "rm -rf ./dist && npm run build.compile && npm run build.types",
-    "build.compile": "cross-env NODE_ENV=production babel src -d dist --source-maps --copy-files",
-    "build.types": "tsc --declaration --outDir dist/ --emitDeclarationOnly --declarationMap --allowJs false --checkJs false",
+    "build": "rm -rf ./dist && npm run build.compile && npm run build.del && npm run build.types",
+    "build.compile": "cross-env NODE_ENV=production babel src -d dist --copy-files",
+    "build.del": "del dist/*.ts dist/*.tsx dist/**/*.ts dist/**/*.tsx dist/**/**/*.ts dist/**/**/*.tsx dist/stories",
+    "build.types": "cross-env NODE_ENV=production tsc",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "prepublish": "npm run build"
@@ -84,6 +85,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.7",
     "cross-env": "^7.0.3",
+    "del-cli": "^3.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
