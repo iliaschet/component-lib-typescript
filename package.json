@@ -2,22 +2,41 @@
   "name": "component-lib-typescript",
   "version": "0.1.0",
   "private": false,
-  "main": "lib/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "source": "src/index.tsx",
+  "license": "ISC",
+  "author": "dbui",
   "files": [
-    "lib"
+    "dist"
   ],
   "description": "DBUI library. Design system",
   "dependencies": {
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
+  "babel": {
+    "presets": [
+      [
+        "react-app",
+        {
+          "absoluteRuntime": false
+        }
+      ],
+      "@babel/preset-env",
+      "@babel/preset-react",
+      "@babel/preset-typescript"
+    ],
+    "ignore": [
+      "**/*.text.js"
+    ]
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "compile-icons": "npx @svgr/cli -d src/icons src/icons --typescript",
-    "prebuild": "rm -rf ./lib && npm run compile-icons && copyfiles --up 1 src/config/fonts/* lib/",
-    "build": "tsc",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "build": "rm -rf ./dist && npm run build.compile && npm run build.types",
+    "build.compile": "cross-env NODE_ENV=production babel src -d dist --source-maps --copy-files",
+    "build.types": "tsc --declaration --outDir dist/ --emitDeclarationOnly --declarationMap --allowJs false --checkJs false",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "prepublish": "npm run build"
@@ -46,6 +65,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
@@ -55,7 +75,6 @@
     "@storybook/node-logger": "^6.1.14",
     "@storybook/preset-create-react-app": "^3.1.5",
     "@storybook/react": "^6.1.14",
-    "@svgr/cli": "^5.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -64,7 +83,7 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.7",
-    "copyfiles": "^2.4.1",
+    "cross-env": "^7.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
